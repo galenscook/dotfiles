@@ -62,6 +62,12 @@
 
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
+	
+	# Purge branches that have been merged (not sure how htis is different than dm)
+	purge-merged = !git branch --merged | tr -d '* ' | grep -v develop | grep -v master | xargs git branch -d
+  	
+	# View recent branches
+	recent = !git reflog | grep checkout | head -10 | awk '{print $8}'
 
 	# Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
