@@ -40,6 +40,11 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
   complete -o default -o nospace -F _git g;
 fi;
 
+# enable git tab completion
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
@@ -54,6 +59,10 @@ complete -W "NSGlobalDomain" defaults;
 alias emp-staging="EMPIRE_API_URL=https://empire.classchirp.com emp"
 alias emp-prod="EMPIRE_API_URL=https://empire.remind.com emp"
 
+# empire v2 aliases
+alias empv2-staging="EMPIRE_API_URL=https://empirev2.classchirp.com emp"
+alias empv2-prod="EMPIRE_API_URL=https://empirev2.remind.com emp"
+
 # redshift alias
 alias redshift-prod="psql -h r101-dw-production.ck1sr65ao7pg.us-east-1.redshift.amazonaws.com -U galen -d r101datawarehouse -p 5439"
 
@@ -67,3 +76,12 @@ export NVM_DIR="/Users/galencook/.nvm"
 export GOPATH="/Users/galencook/go"
 export PATH="$PATH:$GOPATH/bin"
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}:/Users/galencook/Library/Python/2.7/bin"
+export PATH
